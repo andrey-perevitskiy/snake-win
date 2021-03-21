@@ -1,33 +1,51 @@
+#include <stdio.h>
 #include "board.h"
 
-void
-board_draw(int delay)
+struct board *
+board_alloc (RECT rect, char sym)
 {
-	SetConsoleTextAttribute(h, FG_LIGHTGRAY | 0);
-	
-	for (int x = BOARD_LEFT + 1; x < BOARD_RIGHT; x++) {
-		Sleep(delay);
+    struct board * b = malloc(sizeof(struct board));
 
-		SetConsoleCursorPosition(h, (COORD) {x, BOARD_TOP});
-		printf("%c", BOARD_SYM);
+    b->rect = rect;
+    b->sym = sym;
 
-		Sleep(delay);
-		
-		SetConsoleCursorPosition(h, (COORD) {x, BOARD_BOTTOM});
-		printf("%c", BOARD_SYM);
-	}
+    return b;
+}
 
-	for (int y = BOARD_TOP + 1; y < BOARD_BOTTOM; y++) {
-		Sleep(delay);
-		
-		SetConsoleCursorPosition(h, (COORD) {BOARD_LEFT, y});
-		printf("%c", BOARD_SYM);
+void
+board_draw (const struct board * b, int delay)
+{
+    SetConsoleTextAttribute(h, FG_LIGHTGRAY | 0);
 
-		Sleep(delay);
-		
-		SetConsoleCursorPosition(h, (COORD) {BOARD_RIGHT, y});
-		printf("%c", BOARD_SYM);
-	}
-	
-	Sleep(200);
+    for (int x = b->rect.left + 1; x < b->rect.right; x++) {
+        Sleep(delay);
+
+        SetConsoleCursorPosition(h, (COORD) {x, b->rect.top});
+        printf("%c", b->sym);
+
+        Sleep(delay);
+
+        SetConsoleCursorPosition(h, (COORD) {x, b->rect.bottom});
+        printf("%c", b->sym);
+    }
+
+    for (int y = b->rect.top + 1; y < b->rect.bottom; y++) {
+        Sleep(delay);
+
+        SetConsoleCursorPosition(h, (COORD) {b->rect.left, y});
+        printf("%c", b->sym);
+
+        Sleep(delay);
+
+        SetConsoleCursorPosition(h, (COORD) {b->rect.right, y});
+        printf("%c", b->sym);
+    }
+
+    Sleep(200);
+}
+
+void
+board_free (struct board * b)
+{
+    free(b);
 }

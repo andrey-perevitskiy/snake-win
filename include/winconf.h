@@ -1,12 +1,9 @@
 #ifndef WINCONF_H
-#define WINCONF_H
 
-#include <stdbool.h>
 #include <windows.h>
-#include <conio.h>
 
 #define WIN_SIZE_X 60
-#define WIN_SIZE_Y 36
+#define WIN_SIZE_Y 28
 #define WIN_POS_X 300
 #define WIN_POS_Y 150
 
@@ -48,7 +45,8 @@ enum bg_colors {
     BG_WHITE = 240
 };
 
-HANDLE h;
-HWND hWnd;
+extern HANDLE h;
+extern HWND hWnd;
 
-#endif /* WINCONF_H */
+#define WINCONF_H
+#endif
